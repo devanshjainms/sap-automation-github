@@ -15,7 +15,7 @@ jobs:
     name: Create environment
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/devanshjainms/sap-automation:devanshjain/githubworkflow
+      image: ghcr.io/devanshjainms/sap-automation:devanshjain-githubworkflow
     if: contains(github.event.issue.labels.*.name, 'create-environment')
     steps:
       - name: Get app token

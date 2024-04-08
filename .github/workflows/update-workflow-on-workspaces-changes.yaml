@@ -9,7 +9,7 @@ jobs:
   update-config:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/devanshjainms/sap-automation:devanshjain/githubworkflow
+      image: ghcr.io/devanshjainms/sap-automation:devanshjain-githubworkflow
 
     steps:
       - name: Get app token
