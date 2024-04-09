@@ -85,7 +85,13 @@ jobs:
           key_id=$(echo $environment_public_key | jq -r '.key_id')
           key=$(echo $environment_public_key | jq -r '.key')
 
-          echo key_id: $key_id
+          _=$(gh api \
+            -X PUT \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            ${url_to_call}/secrets/CP_AZURE_CLIENT_ID \
+            -f encrypted_value=$(echo -n ${{ secrets.AZURE_CLIENT_ID}}}} | openssl rsautl -encrypt -pubin -inkey <(echo "${key}") | base64)\
+            -f key_id=${key_id})
 
           mkdir -p WORKSPACES/LANDSCAPE/${workload_environment_config^^}
 
