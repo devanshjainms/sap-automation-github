@@ -19,6 +19,7 @@ on:
         type: choice
         options:
           - DJAIN-WEEU-SAP_LIBRARY
+          - DJWZ-WEEU-SAP_LIBRARY
       use_webapp:
         default: true
         description: Deploy the configuration web application infrastructure
