@@ -84,6 +84,7 @@ jobs:
 
           key_id=$(echo $environment_public_key | jq -r '.key_id')
           key=$(echo $environment_public_key | jq -r '.key')
+          echo key: $key
 
           _=$(gh api \
             -X PUT \
