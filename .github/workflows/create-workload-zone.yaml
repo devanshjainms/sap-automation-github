@@ -75,7 +75,14 @@ jobs:
             -H "X-GitHub-Api-Version: 2022-11-28" \
             ${url_to_call})
 
-          mkdir -p WORKSPACES/WORKLOAD/${workload_environment_config^^}
+          mkdir -p WORKSPACES/LANDSCAPE/${workload_environment_config^^}
+
+          cat .cfg_template/workloadzone.tfvars \
+            | sed "s|@@ENV@@|${environment}|g" \
+            | sed "s|@@REGION@@|${region}|g" \
+            | sed "s|@@VNET@@|${workload_vnet}|g" \
+            | sed "s|@@REGION_DISPLAY_NAME@@|${region}|g" \
+            > WORKSPACES/LANDSCAPE/${workload_environment_config^^}/${workload_environment_config^^}.tfvars
 
           # Update the environment in the issue-closed workflow
           workspace=$(ls ${GITHUB_WORKSPACE}/WORKSPACES|tail -n 1)
@@ -84,7 +91,7 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "sap-automation-deployer@noreply.github.com"
 
-          git add WORKSPACES/WORKLOAD/${workload_environment_config^^}
+          git add WORKSPACES/LANDSCAPE/${workload_environment_config^^}
 
           git commit -m "Add folder for ${workload_environment} in ${region}"
           git push
