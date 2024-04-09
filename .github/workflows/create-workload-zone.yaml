@@ -75,10 +75,27 @@ jobs:
             -H "X-GitHub-Api-Version: 2022-11-28" \
             ${url_to_call})
 
+          # public key
+          environment_public_key=$(gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            ${url_to_call}/secrets/public-key)
+
+          key_id=$(echo $environment_public_key | jq -r '.key_id')
+          key=$(echo $environment_public_key | jq -r '.key')
+
+          _=$(gh api \
+            --method PUT \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            ${url_to_call}/secrets/CP_AZURE_CLIENT_ID \
+            -f encrypted_value=$(echo -n ${{ secrets.AZURE_CLIENT_ID}}}} | openssl rsautl -encrypt -pubin -inkey <(echo "${key}") | base64)\
+            -f key_id=${key_id})
+
           mkdir -p WORKSPACES/LANDSCAPE/${workload_environment_config^^}
 
           cat .cfg_template/workloadzone.tfvars \
-            | sed "s|@@ENV@@|${environment}|g" \
+            | sed "s|@@ENV@@|${workload_environment}|g" \
             | sed "s|@@REGION@@|${region}|g" \
             | sed "s|@@WORKLOAD_VNET@@|${workload_vnet}|g" \
             > WORKSPACES/LANDSCAPE/${workload_environment_config^^}/${workload_environment_config^^}.tfvars
