@@ -80,8 +80,7 @@ jobs:
           cat .cfg_template/workloadzone.tfvars \
             | sed "s|@@ENV@@|${environment}|g" \
             | sed "s|@@REGION@@|${region}|g" \
-            | sed "s|@@VNET@@|${workload_vnet}|g" \
-            | sed "s|@@REGION_DISPLAY_NAME@@|${region}|g" \
+            | sed "s|@@WORKLOAD_VNET@@|${workload_vnet}|g" \
             > WORKSPACES/LANDSCAPE/${workload_environment_config^^}/${workload_environment_config^^}.tfvars
 
           # Update the environment in the issue-closed workflow
