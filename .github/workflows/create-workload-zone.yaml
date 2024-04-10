@@ -31,7 +31,7 @@ permissions:
 jobs:
   create_workload_zone:
     name: Create workload zone
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     environment: "${{ inputs.deployer_environment }}"
     container:
       image: ghcr.io/devanshjainms/sap-automation:devanshjain-githubworkflow
